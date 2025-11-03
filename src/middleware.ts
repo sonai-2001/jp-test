@@ -183,7 +183,7 @@ import { NextRequest, NextResponse } from "next/server";
  */
 
 const allowedOrigins = [
-  "http://localhost:3000",
+  "https://jp-test-rho.vercel.app",
   process.env.NEXT_PUBLIC_BASE_URL?.replace(/\/$/, "") || "",
   process.env.NEXT_PUBLIC_ADMIN_BASE_URL?.replace(/\/$/, "") || "",
 ].filter(Boolean);
