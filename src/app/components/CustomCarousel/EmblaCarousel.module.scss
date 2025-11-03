@@ -1,0 +1,158 @@
+.embla {
+    // overflow: hidden;
+    max-width: 100%;
+    padding: 0;
+    position: relative;
+}
+
+.embla__viewport {
+    overflow: hidden;
+    width: 100%;
+    position: relative;
+    padding: 0;
+}
+
+.embla__container {
+    display: flex;
+    gap: 16px;
+}
+
+// Slide styles for different screen sizes
+.embla__slide {
+    position: relative;
+    padding: 0px 0px;
+    // padding-right: 14px;
+    // flex: 0 0 calc(100% / 5);
+    // flex: 0 0 18.87%; // 5 slides per view by default (20% width per slide)
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    // background-color: #f5f5f5;
+    // border: 1px solid #ddd;
+
+    :global(.item) {
+        width: 100%;
+    }
+}
+
+.embla__slide__inner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    user-select: none;
+    cursor: pointer;
+    width: 100%;
+}
+
+.embla__buttons {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+
+    button {
+        margin: 0 0px;
+        padding: 0;
+        font-size: 16px;
+        position: absolute;
+        top: 50%;
+        transform: translate(0%, -50%);
+        z-index: 9;
+        background: #b22222;
+        border: none;
+        width: 35px;
+        height: 35px;
+        border-radius: 50% !important;
+        display: inline-flex !important;
+        justify-content: center;
+        align-items: center;
+        transition: 0.3s;
+
+        svg{
+            path{
+                stroke: #fff;
+            }
+        }
+
+        &:hover {
+            background: #c52222;
+        }
+
+        &.embla__button__disabled {
+            cursor: not-allowed;
+            opacity: 0.5;
+
+            &:hover {
+                background: #c52222;
+            }
+        }
+
+        &.leftBtn {
+            left: -5px;
+        }
+
+        &.rightBtn {
+            right: -5px;
+        }
+
+    }
+}
+
+.embla__dots {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+    gap: 6px;
+    flex-wrap: wrap;
+
+    button {
+        min-width: 10px;
+        max-width: 10px;
+        height: 10px;
+        margin: 0 0px;
+        display: inline-block;
+        border-radius: 50%;
+        background: none;
+        border: 2px solid #b22222;
+        cursor: pointer;
+        padding: 0;
+
+        &:focus {
+            outline: none;
+        }
+
+        &.embla__dot__active {
+            background: #b22222;
+        }
+    }
+}
+
+
+
+@media (max-width: 1199px) {
+    .embla__slide {
+        // flex: 0 0 23.7%; // 4 slides per view
+        // flex: 0 0 calc(100% / 4); // 4 slides per view
+    }
+}
+
+// Adjust slides for tablet view
+@media (max-width: 1024px) {
+    .embla__slide {
+        flex: 0 0 32%; // 3 slides per view
+    }
+}
+
+// Adjust slides for mobile view
+@media (max-width: 768px) {
+    .embla__slide {
+        flex: 0 0 50%; // 2 slides per view
+    }
+}
+
+// Mobile (small screens)
+@media (max-width: 480px) {
+    .embla__slide {
+        flex: 0 0 100%; // 1 slide per view
+    }
+}

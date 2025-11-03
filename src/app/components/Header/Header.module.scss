@@ -1,0 +1,612 @@
+.header_main {
+  background-color: #1f3a5f;
+  padding: 11px 0;
+
+  .header_menu {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    overflow: visible; // Prevent clipping of mega menu
+
+    .header_logo {
+      img {
+        width: auto;
+        height: 47px;
+      }
+    }
+
+    // Mobile Toggle Button
+    .mobile_toggle {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      color: #fff;
+    }
+
+    // Navigation Menu
+    .nav_menu {
+      ul {
+        padding-left: 0;
+        margin-bottom: 0;
+        list-style: none;
+        display: flex;
+        align-items: center;
+        gap: 28px;
+        height: 100%;
+
+        .dropdown_toggle {
+          font-size: 18px;
+          font-weight: 500;
+          text-decoration: none;
+          color: #fff;
+          position: relative;
+          padding: 0;
+
+          &::after {
+            display: none;
+          }
+        }
+
+        li {
+          position: relative;
+
+          a {
+            font-size: 17px;
+            font-weight: 400;
+            text-decoration: none;
+            color: #fff;
+            position: relative;
+            transition: all 0.3s ease;
+
+            &:hover {
+              color: #e0e0e0;
+            }
+
+            &.active {
+              &::before {
+                content: '';
+                width: 100%;
+                height: 3px;
+                position: absolute;
+                background: #b22222;
+                bottom: -8px;
+                left: 0;
+                transition: 0.5s;
+              }
+            }
+          }
+
+          .headerProfile_img {
+            border-radius: 50%;
+          }
+        }
+      }
+
+      &.open {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+        left: 0;
+        z-index: 99;
+      }
+    }
+  }
+}
+
+// Cart Icon
+.cartIconWrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.cartBadge {
+  position: absolute;
+  top: -6px;
+  right: -12px;
+  background-color: #b22222;
+  color: white;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  font-size: 11px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  line-height: 1;
+  font-weight: 600;
+}
+
+// Mega Menu Wrapper
+// Mega Menu Wrapper
+.megaMenuWrapper {
+  position: relative;
+
+  // Create an invisible bridge between trigger and mega menu
+  &::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    height: 8px; // Bridge height - prevents gaps
+    background: transparent;
+    z-index: 999;
+    pointer-events: auto; // Allow hover events
+  }
+
+  .productsLink {
+    position: relative;
+
+    &:hover {
+      color: #e0e0e0 !important;
+    }
+  }
+
+  // Ensure the bridge is only active when menu can be shown
+  @media screen and (min-width: 768px) {
+    &::after {
+      display: block;
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    &::after {
+      display: none; // No bridge needed on mobile
+    }
+  }
+}
+
+// Optional: style the Products link when menu is open
+.isOpen .productsLink {
+  margin-bottom: 8px;
+}
+
+// Mega Menu Main Container - Flicker-Free Centering
+.megaMenu {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%) translateZ(0); // GPU acceleration
+  width: 90%;
+  max-width: 800px;
+  min-width: 320px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  display: flex;
+  z-index: 1000;
+  overflow: hidden;
+  border: 1px solid #e5e7eb;
+  animation: fadeInDown 0.3s ease-out;
+  will-change: transform; // Hint browser: transform is coming
+  backface-visibility: hidden; // Prevent rendering glitches
+  perspective: 1000px;
+
+  // hidden by default; toggled via .open/.closed classes
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+
+  // Arrow pointer - centered
+  &::before {
+    content: '';
+    position: absolute;
+    top: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 8px solid #ffffff;
+  }
+
+  &.open {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  &.closed {
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Mega Menu Tabs (Left Side)
+.megaTabs {
+  flex: 0 0 40%;
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  border-right: 1px solid #e5e7eb;
+  padding: 1.5rem 0;
+
+  .megaTitle {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1e293b;
+    margin: 0 0 1rem 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #1f3a5f;
+    display: inline-block;
+  }
+}
+
+// Tab Buttons
+.megaTab {
+  width: 100%;
+  padding: 0.875rem 1.5rem;
+  text-align: left;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+  color: #475569;
+  font-size: 15px;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  &:hover {
+    background: rgba(31, 58, 95, 0.08);
+    color: #1f3a5f;
+
+    .tabIcon {
+      transform: translateX(4px);
+      color: #1f3a5f;
+    }
+  }
+
+  &.activeTab {
+    background: rgba(31, 58, 95, 0.12);
+    color: #1f3a5f;
+    font-weight: 600;
+    border-right: 3px solid #1f3a5f;
+
+    .tabIcon {
+      color: #1f3a5f;
+    }
+  }
+
+  .tabIcon {
+    font-size: 12px;
+    color: #94a3b8;
+    transition: all 0.2s ease;
+  }
+}
+
+// Mega Menu Content (Right Side)
+.megaContent {
+  flex: 1;
+  padding: 1.5rem;
+  background: #ffffff;
+}
+
+.megaContentHeader {
+  margin-bottom: 1.25rem;
+
+  h5 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1e293b;
+    margin: 0;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #e5e7eb;
+  }
+}
+
+// Submenu List
+.megaSubMenuContainer {
+  .megaSubMenu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    .megaItem {
+      margin-bottom: 0.5rem;
+
+      .megaItemLink {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0.75rem 1rem;
+        color: #475569 !important;
+        text-decoration: none;
+        border-radius: 8px;
+        font-size: 15px;
+        font-weight: 500;
+        transition: all 0.2s ease;
+        border: 1px solid transparent;
+
+        &:hover {
+          background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+          color: #1f3a5f !important;
+          border-color: #e5e7eb;
+
+          .itemIcon {
+            transform: translateX(4px);
+            color: #1f3a5f;
+          }
+        }
+
+        .itemIcon {
+          font-size: 11px;
+          color: #94a3b8;
+          transition: all 0.2s ease;
+        }
+      }
+    }
+  }
+}
+
+// "View All" Button
+.seeMoreContainer {
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e5e7eb;
+
+  .seeMoreLink {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.75rem 1.5rem;
+    background: linear-gradient(135deg, #1f3a5f 0%, #2c5aa0 100%);
+    color: #ffffff !important;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(31, 58, 95, 0.2);
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 16px rgba(31, 58, 95, 0.3);
+      background: linear-gradient(135deg, #2c5aa0 0%, #1f3a5f 100%);
+    }
+  }
+}
+
+// Close Button for Mobile
+.closeMegaBtn {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  background: none;
+  border: none;
+  font-size: 28px;
+  color: #1f3a5f;
+  cursor: pointer;
+  z-index: 10;
+  line-height: 1;
+  opacity: 0.8;
+
+  &:hover {
+    opacity: 1;
+  }
+
+  @media (min-width: 768px) {
+    display: none;
+  }
+}
+
+// ===================================
+// Responsive Design
+// ===================================
+
+@media screen and (max-width: 767px) {
+  .header_main {
+    .header_menu {
+      .mobile_toggle {
+        display: block;
+      }
+
+      .nav_menu {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background-color: #fff;
+        flex-direction: column;
+        align-items: center;
+        padding: 10px 20px;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-10px);
+        transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        z-index: 99;
+
+        &.open {
+          opacity: 1;
+          visibility: visible;
+          transform: translateY(0);
+        }
+
+        ul {
+          flex-direction: column;
+          gap: 14px; // tighter spacing on mobile
+          width: 100%;
+          align-items: stretch; // ensure li stretches full width
+
+          li {
+            width: 100%;
+            text-align: center;
+
+            a {
+              color: #000 !important;
+              display: block;
+              width: 100%;
+            }
+          }
+
+          .megaMenuWrapper {
+            width: 100%;
+
+            .megaMenu {
+              position: static;
+              left: auto;
+              transform: none; // keep in normal flow
+              width: 100%;
+              max-width: 100%;
+              flex-direction: column;
+              border-radius: 12px;
+              overflow: hidden;
+              box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+              animation: none;
+
+              // prevent layout shift when closed
+              &.closed {
+                display: none !important;
+              }
+
+              // only add spacing when open
+              &.open {
+                display: block;
+                margin-top: 8px;
+              }
+
+              // better small-screen behavior
+              max-height: calc(100vh - 160px);
+              overflow-y: auto;
+              -webkit-overflow-scrolling: touch;
+
+              // hide the arrow on mobile
+              &::before {
+                display: none;
+              }
+
+              .megaTabs {
+                width: 100%;
+                border-right: none;
+                border-bottom: 1px solid #e5e7eb;
+                padding: 1rem;
+              }
+
+              .megaTab {
+                font-size: 16px;
+                padding: 1rem 1.25rem;
+              }
+
+              .megaContent {
+                padding: 1.25rem;
+              }
+
+              .megaContentHeader h5 {
+                font-size: 18px;
+              }
+
+              .megaItemLink {
+                font-size: 15px;
+                padding: 0.75rem 1rem;
+              }
+
+              .seeMoreLink {
+                font-size: 14px;
+                padding: 0.75rem 1.25rem;
+              }
+            }
+          }
+        }
+      }
+
+      &.coming_soon_header {
+        background-color: #000 !important;
+
+        .mobile_toggle {
+          color: #ffffff !important;
+        }
+      }
+    }
+  }
+
+  /* IMPORTANT: remove the previous global mobile override that pushed the menu left */
+  /* If you still have it in your file, delete it:
+    .megaMenu {
+      left: 50% !important;
+      transform: translateX(-50%) translateZ(0) !important;
+      width: 100% !important;
+      max-width: calc(100vw - 16px) !important;
+      border-radius: 12px !important;
+    }
+  */
+
+  /* Safety override in case of caching or leftover builds */
+  .megaMenu {
+    left: auto !important;
+    transform: none !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    margin-left: 0 !important;
+  }
+}
+
+// Tablet: 768px to 1199px
+@media screen and (min-width: 768px) and (max-width: 1199px) {
+  .megaMenu {
+    width: 700px;
+    max-width: calc(100vw - 32px);
+    left: 50%;
+    transform: translateX(-50%) translateZ(0);
+  }
+
+  .megaMenu::before {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+// Desktop: 1200px+
+@media screen and (min-width: 1200px) {
+  .megaMenu {
+    width: 800px;
+    max-width: 800px;
+    left: 50%;
+    transform: translateX(-50%) translateZ(0);
+  }
+
+  .megaMenu::before {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+// Coming Soon Override
+.coming_soon_header {
+  background-color: #000000 !important;
+
+  .header_menu {
+    .nav_menu {
+      ul {
+        li {
+          a {
+            color: #ffffff !important;
+
+            &:hover {
+              color: #cccccc !important;
+            }
+          }
+        }
+      }
+    }
+
+    .mobile_toggle {
+      color: #ffffff !important;
+    }
+  }
+}

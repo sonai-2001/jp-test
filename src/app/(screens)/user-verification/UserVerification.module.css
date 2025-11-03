@@ -1,0 +1,57 @@
+/* Circle animation: the circle will appear and grow */
+.circle {
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    background-color: #28a745;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* The circle will gradually become visible and grow */
+.tickAnimation circle {
+    opacity: 0;
+    animation: circleAppear 1s ease-out forwards;
+}
+
+/* The checkmark will draw itself with a delay */
+.tickAnimation path {
+    stroke-dasharray: 80;
+    stroke-dashoffset: 80;
+    animation: drawCheckmark 1s 0.5s ease forwards;
+}
+
+/* Animation for the circle: it will grow and fade in */
+@keyframes circleAppear {
+    0% {
+        opacity: 0;
+        r: 0;
+    }
+    100% {
+        opacity: 1;
+        r: 105; /* Half of 250px width/height */
+    }
+}
+
+/* Animation for the circle: it will grow and fade in */
+@keyframes circleAppear {
+    0% {
+        opacity: 0;
+        r: 0;
+    }
+    100% {
+        opacity: 1;
+        r: 7;
+    }
+}
+
+/* Animation for the checkmark: it will be drawn from left to right */
+@keyframes drawCheckmark {
+    0% {
+        stroke-dashoffset: 10;
+    }
+    100% {
+        stroke-dashoffset: 0;
+    }
+}
